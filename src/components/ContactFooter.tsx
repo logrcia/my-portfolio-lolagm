@@ -14,7 +14,7 @@ export const ContactFooter: React.FC = () => {
   };
 
   return (
-    <footer className="w-full bg-[#D97186] text-white py-8 sm:py-10 px-6 sm:px-12 md:px-16 select-none relative">
+    <footer id="contact" className="w-full bg-[#D97186] text-white py-10 sm:py-12 px-6 sm:px-12 md:px-16 select-none relative scroll-mt-20">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 text-center md:text-left">
         {/* "Contact me!" */}
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight shrink-0">

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Sparkles, Calendar, UserCheck } from 'lucide-react';
+import { X, Sparkles, Calendar, UserCheck, ExternalLink } from 'lucide-react';
 import { Project } from '../types.ts';
 
 interface ProjectModalProps {
@@ -130,14 +130,20 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 bg-[#F5ECE4] border-t border-[#EADBCE] flex justify-end">
-          <button
-            onClick={onClose}
-            className="px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-[#D97186] hover:bg-[#C85E73] rounded-xl transition-colors cursor-pointer shadow-xs"
+        {/* Footer: Reemplazado botón cerrar por enlace directo a Behance en inglés */}
+        <div className="px-6 py-4 bg-[#F5ECE4] border-t border-[#EADBCE] flex items-center justify-between">
+          <span className="text-xs text-[#7A7270] font-medium hidden sm:inline">
+            Explore full project gallery
+          </span>
+          <a
+            href={project.behanceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-[#D97186] hover:bg-[#C85E73] rounded-xl transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer ml-auto"
           >
-            Cerrar
-          </button>
+            <span>View on Behance</span>
+            <ExternalLink size={15} />
+          </a>
         </div>
       </div>
     </div>

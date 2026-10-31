@@ -2,7 +2,7 @@ import React from 'react';
 
 export const AboutSection: React.FC = () => {
   return (
-    <section className="relative max-w-5xl mx-auto px-6 sm:px-12 md:px-16 pb-20 sm:pb-28">
+    <section className="relative max-w-5xl mx-auto px-6 sm:px-12 md:px-16 pb-20 sm:pb-28 scroll-mt-20">
       <div className="max-w-3xl">
         {/* About Block */}
         <div className="mb-12 sm:mb-14">

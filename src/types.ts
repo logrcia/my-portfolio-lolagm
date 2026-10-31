@@ -11,4 +11,5 @@ export interface Project {
   tools: string[];
   highlights?: string[];
   tags: string[];
+  behanceUrl: string;
 }

@@ -8,7 +8,17 @@ interface ProjectGridProps {
 
 export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, onSelectProject }) => {
   return (
-    <section id="projects" className="relative px-6 sm:px-12 md:px-16 max-w-5xl mx-auto pb-16 sm:pb-24">
+    <section id="work" className="relative px-6 sm:px-12 md:px-16 max-w-5xl mx-auto pt-24 sm:pt-28 pb-16 sm:pb-24 scroll-mt-20">
+      {/* Section Header */}
+      <div className="mb-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#1D1B1B] tracking-[-0.01em]">
+          Work
+        </h2>
+        <p className="text-xs sm:text-sm text-[#5C5656] mt-1">
+          Selected projects in editorial photography, branding, and video editing.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12 sm:gap-y-16">
         {projects.map((project) => (
           <div

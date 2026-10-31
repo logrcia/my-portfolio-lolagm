@@ -7,6 +7,7 @@ export const portfolioProjects: Project[] = [
     subtitle: 'Editorial - Photography',
     category: 'Editorial - Photography',
     thumbnail: '/assets/projects/mirenlas.png',
+    behanceUrl: 'https://www.behance.net/gallery/248129163/Mirenlas',
     description: 'An intimate editorial photography project exploring contemporary portraiture, delicate beauty, and expressive makeup art direction.',
     fullOverview: '“Mírenlas” is a photographic editorial series focused on capturing spontaneous intimacy, raw gestures, and creative styling. The project required thorough pre-production, moodboard curation, lighting design, and meticulous post-processing to evoke a warm, nostalgic, and cinematic visual language.',
     role: 'Art Direction, Photography & Retouching',
@@ -25,6 +26,7 @@ export const portfolioProjects: Project[] = [
     subtitle: 'Branding',
     category: 'Branding',
     thumbnail: '/assets/projects/mila_mia.png',
+    behanceUrl: 'https://www.behance.net/gallery/237368645/Mila-Mia-Branding',
     description: 'Comprehensive brand identity and visual language designed with an organic, gentle aesthetic and signature circular monogram.',
     fullOverview: 'Mila Mia is an identity design project built around warmth, authenticity, and visual softness. It encompasses the core logo mark—featuring an organic circular monogram paired with fluid, hand-drawn typography—along with primary and secondary color palettes, packaging collateral, and brand application guidelines.',
     role: 'Brand Identity Designer',
@@ -43,6 +45,7 @@ export const portfolioProjects: Project[] = [
     subtitle: 'Video editing',
     category: 'Video editing',
     thumbnail: '/assets/projects/social_media.png',
+    behanceUrl: 'https://www.behance.net/gallery/248143323/Social-Media-Content',
     description: 'Dynamic short-form video content and packaging showcase tailored for high engagement across digital storytelling platforms.',
     fullOverview: 'This project focuses on social-first multimedia assets created to highlight brand packaging and consumer unboxing experiences. By blending tactile stop-motion elements, crisp pacing, and rhythmic sound design, the videos translate physical packaging into compelling digital moments.',
     role: 'Video Editor & Motion Designer',
@@ -61,6 +64,7 @@ export const portfolioProjects: Project[] = [
     subtitle: 'Video - Video Editing',
     category: 'Video - Video Editing',
     thumbnail: '/assets/projects/experimental_video.png',
+    behanceUrl: 'https://www.behance.net/gallery/234768701/Video-Vlog-Museo-Malba-Exposicion-KUITCA-86',
     description: 'An experimental video exploration surrounding the "KUITCA 86" exhibition at MALBA, reflecting on architectural space, memory, and rhythm.',
     fullOverview: 'Created in dialogue with the retrospective exhibition of renowned Argentine painter Guillermo Kuitca at MALBA (Museo de Arte Latinoamericano de Buenos Aires). The piece examines how museum visitors inhabit spatial art installations, leveraging atmospheric transitions, textural overlays, and contemplative editing tempos.',
     role: 'Director, Cinematographer & Editor',
@@ -75,31 +79,57 @@ export const portfolioProjects: Project[] = [
   }
 ];
 
-export const toolsList = [
-  {
-    id: 'ai',
-    name: 'Adobe Illustrator',
-    type: 'badge',
-    badgeText: 'Ai',
-    badgeClass: 'text-2xl font-bold tracking-tight'
-  },
+export interface ToolItem {
+  id: string;
+  name: string;
+  type: 'badge' | 'figma' | 'procreate' | 'notion';
+  badgeText?: string;
+}
+
+export const toolsList: ToolItem[] = [
   {
     id: 'ps',
-    name: 'Adobe Photoshop',
+    name: 'Photoshop',
     type: 'badge',
-    badgeText: 'Ps',
-    badgeClass: 'text-2xl font-bold tracking-tight'
+    badgeText: 'Ps'
+  },
+  {
+    id: 'ai',
+    name: 'Illustrator',
+    type: 'badge',
+    badgeText: 'Ai'
   },
   {
     id: 'pr',
-    name: 'Adobe Premiere',
+    name: 'Premiere',
     type: 'badge',
-    badgeText: 'Pr',
-    badgeClass: 'text-2xl font-bold tracking-tight'
+    badgeText: 'Pr'
   },
   {
     id: 'figma',
     name: 'Figma',
-    type: 'icon'
+    type: 'figma'
+  },
+  {
+    id: 'capcut',
+    name: 'CapCut',
+    type: 'badge',
+    badgeText: 'Cc'
+  },
+  {
+    id: 'ae',
+    name: 'After Effects',
+    type: 'badge',
+    badgeText: 'Ae'
+  },
+  {
+    id: 'procreate',
+    name: 'Procreate',
+    type: 'procreate'
+  },
+  {
+    id: 'notion',
+    name: 'Notion',
+    type: 'notion'
   }
 ];

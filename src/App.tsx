@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Header } from './components/Header.tsx';
 import { Hero } from './components/Hero.tsx';
 import { ProjectGrid } from './components/ProjectGrid.tsx';
+import { Moodboard } from './components/Moodboard.tsx';
 import { ToolsSection } from './components/ToolsSection.tsx';
 import { AboutSection } from './components/AboutSection.tsx';
 import { ContactFooter } from './components/ContactFooter.tsx';
@@ -18,40 +19,47 @@ import { Project } from './types.ts';
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const handleExploreClick = () => {
-    const el = document.getElementById('projects');
+  const handleNavigate = (sectionId: string) => {
+    const el = document.getElementById(sectionId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const handleExploreClick = () => {
+    handleNavigate('work');
+  };
+
   return (
     <div className="min-h-screen bg-[#FAF4EF] text-[#1D1B1B] relative overflow-x-hidden flex flex-col font-sans selection:bg-[#E89AA8] selection:text-white">
-      {/* Decorative hand-drawn flowers scattered in background */}
+      {/* Flores ilustradas decorativas en segundo plano */}
       <FlowerDecorations />
 
-      {/* Top Bar Header */}
-      <Header />
+      {/* 1. Navbar fija (fixed top-0) */}
+      <Header onNavigate={handleNavigate} />
 
-      {/* Main Content Area */}
+      {/* Main Content Area con espacio para la barra fija */}
       <main className="flex-1 relative z-10">
-        {/* Hero Section */}
+        {/* 2. Hero: En fullscreen ocupa el 100vh exacto de pantalla inicial */}
         <Hero onExploreClick={handleExploreClick} />
 
-        {/* Portfolio Projects Grid */}
+        {/* 3. Work: Proyectos seleccionados */}
         <ProjectGrid
           projects={portfolioProjects}
           onSelectProject={(project) => setSelectedProject(project)}
         />
 
-        {/* Tools Section */}
+        {/* 4. Live Moodboard: Conectado a canal propio de Lola: inspo-z5eag9wxqag */}
+        <Moodboard channelSlug="inspo-z5eag9wxqag" />
+
+        {/* 5. Tools: 8 herramientas con iconos y badges */}
         <ToolsSection />
 
-        {/* About & Background Section */}
+        {/* 6. About & Background detallado */}
         <AboutSection />
       </main>
 
-      {/* Bottom Contact Bar */}
+      {/* 7. Contact Footer */}
       <ContactFooter />
 
       {/* Interactive Project Modal */}

@@ -26,15 +26,25 @@
     <img src="../public/assets/flower_tilted.png" class="flower flower-10" alt="" />
   </div>
 
-  <!-- 1. BARRA SUPERIOR -->
+  <!-- 1. BARRA SUPERIOR REORGANIZADA -->
   <header class="top-bar">
-    <div class="top-bar-name">LOLA GARCÍA MARELLI</div>
-    <div class="top-bar-role">MULTIMEDIA DESIGNER</div>
+    <a href="#about" class="top-bar-name">LOLA GARCÍA MARELLI</a>
+    <nav class="top-nav">
+      <a href="#about" class="nav-link">About</a>
+      <span class="nav-sep">·</span>
+      <a href="#work" class="nav-link">Work</a>
+      <span class="nav-sep">·</span>
+      <a href="#moodboard" class="nav-link">Live moodboard</a>
+      <span class="nav-sep">·</span>
+      <a href="#tools" class="nav-link">Tools</a>
+      <span class="nav-sep">·</span>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
   </header>
 
   <main class="page-container">
-    <!-- 2. HERO / PRESENTACIÓN -->
-    <section class="hero-section">
+    <!-- 2. HERO / PRESENTACIÓN (FULLSCREEN INICIAL) -->
+    <section id="about" class="hero-section">
       <div class="hero-content">
         <div class="hero-avatar-wrapper">
           <img src="../public/assets/avatar_lola.png" alt="Ilustración Lola García Marelli" class="hero-avatar" />
@@ -47,17 +57,21 @@
       </div>
 
       <div class="take-a-look-container">
-        <a href="#projects" class="take-a-look-btn">
+        <a href="#work" class="take-a-look-btn">
           <span>Take a look!</span>
           <span class="arrow-down">↓</span>
         </a>
       </div>
     </section>
 
-    <!-- 3. GRILLA DE PROYECTOS -->
-    <section id="projects" class="projects-section">
+    <!-- 3. WORK: GRILLA DE PROYECTOS -->
+    <section id="work" class="projects-section">
+      <div class="section-title-wrap">
+        <h2 class="section-heading">Work</h2>
+        <p class="section-desc">Selected projects in editorial photography, branding, and video editing.</p>
+      </div>
+
       <div class="projects-grid">
-        
         <!-- PROYECTO 1 -->
         <article class="project-card" data-project="mirenlas">
           <div class="card-media">
@@ -105,34 +119,60 @@
             <p class="card-subtitle">Video - Video Editing</p>
           </div>
         </article>
-
       </div>
     </section>
 
-    <!-- 4. SECCIÓN TOOLS -->
-    <section class="tools-section">
+    <!-- 4. LIVE MOODBOARD (ARE.NA API) -->
+    <section id="moodboard" class="moodboard-section">
+      <div class="moodboard-header">
+        <div>
+          <span class="sub-label">Canal de Are.na · @lola-garcia-marelli</span>
+          <h2 class="section-heading">Live Moodboard — “inspo”</h2>
+          <p class="section-desc">Referencias visuales, piezas de archivo e inspiración estética en constante actualización.</p>
+        </div>
+        <div>
+          <a id="arenaExternalLink" href="https://www.are.na/channel/inspo-z5eag9wxqag" target="_blank" rel="noopener noreferrer" class="btn-arena-link">
+            <span>Ver canal en Are.na</span>
+            <span style="font-size: 14px;">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="moodboardFeedback" class="moodboard-feedback" style="display: none;"></div>
+
+      <div id="moodboardGrid" class="moodboard-grid">
+        <!-- Bloques cargados dinámicamente vía API -->
+      </div>
+    </section>
+
+    <!-- 5. TOOLS (8 HERRAMIENTAS) -->
+    <section id="tools" class="tools-section">
       <div class="tools-header-container">
         <h2 class="section-heading">Tools</h2>
+        <p class="section-desc">Software and platforms I use daily for design, motion, and visual production.</p>
       </div>
 
       <div class="tools-banner">
         <div class="tools-grid">
-          
-          <div class="tool-item">
-            <div class="tool-badge">Ai</div>
-            <span class="tool-name">Adobe Illustrator</span>
-          </div>
-
+          <!-- Photoshop -->
           <div class="tool-item">
             <div class="tool-badge">Ps</div>
-            <span class="tool-name">Adobe Photoshop</span>
+            <span class="tool-name">Photoshop</span>
           </div>
 
+          <!-- Illustrator -->
+          <div class="tool-item">
+            <div class="tool-badge">Ai</div>
+            <span class="tool-name">Illustrator</span>
+          </div>
+
+          <!-- Premiere -->
           <div class="tool-item">
             <div class="tool-badge">Pr</div>
-            <span class="tool-name">Adobe Premiere</span>
+            <span class="tool-name">Premiere</span>
           </div>
 
+          <!-- Figma -->
           <div class="tool-item">
             <div class="tool-icon-figma">
               <svg viewBox="0 0 38 57" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -146,14 +186,42 @@
             <span class="tool-name">Figma</span>
           </div>
 
+          <!-- CapCut -->
+          <div class="tool-item">
+            <div class="tool-badge">Cc</div>
+            <span class="tool-name">CapCut</span>
+          </div>
+
+          <!-- After Effects -->
+          <div class="tool-item">
+            <div class="tool-badge">Ae</div>
+            <span class="tool-name">After Effects</span>
+          </div>
+
+          <!-- Procreate -->
+          <div class="tool-item">
+            <div class="tool-badge">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18.37 2.63 14 7l-1.59-1.59a2 2 0 0 0-2.82 0L8 7l9 9 1.59-1.59a2 2 0 0 0 0-2.82L17 10l4.37-4.37a2.12 2.12 0 1 0-3-3Z" />
+                <path d="M9 8c-2 3-4 3.5-7 4l8 8c.5-3 1-5 4-7" />
+              </svg>
+            </div>
+            <span class="tool-name">Procreate</span>
+          </div>
+
+          <!-- Notion -->
+          <div class="tool-item">
+            <div class="tool-badge" style="font-family: Georgia, serif; font-size: 20px;">N</div>
+            <span class="tool-name">Notion</span>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- 5. SECCIÓN ABOUT Y BACKGROUND -->
+    <!-- 6. SECCIÓN ABOUT Y BACKGROUND DETALLADA -->
     <section class="bio-section">
       <div class="bio-container">
-        
         <div class="bio-block">
           <h2 class="section-heading">About</h2>
           <p class="bio-text">
@@ -167,13 +235,12 @@
             I'm currently studying at Maimónides University, where I've been developing skills in visual communication, branding, user experience, and video editing. Throughout my studies, I've worked on projects that combine concept, identity, and storytelling, allowing me to explore different areas of design and strengthen my creative approach.
           </p>
         </div>
-
       </div>
     </section>
   </main>
 
-  <!-- 6. FOOTER CONTACT ME -->
-  <footer class="contact-footer">
+  <!-- 7. FOOTER CONTACT ME -->
+  <footer id="contact" class="contact-footer">
     <div class="footer-container">
       <h2 class="footer-heading">Contact me!</h2>
 
@@ -200,7 +267,7 @@
     </div>
   </footer>
 
-  <!-- MODAL DE DETALLE DE PROYECTO (Puro JS) -->
+  <!-- MODAL DE DETALLE DE PROYECTO (Vanilla JS) -->
   <div id="projectModal" class="modal-overlay" aria-hidden="true">
     <div class="modal-card">
       <div class="modal-header">
@@ -228,7 +295,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button id="modalCloseActionBtn" class="btn-primary">Cerrar</button>
+        <a id="modalBehanceLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+          <span>View on Behance</span>
+          <span style="font-size: 13px;">↗</span>
+        </a>
       </div>
     </div>
   </div>
