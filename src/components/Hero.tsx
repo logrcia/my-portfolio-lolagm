@@ -7,8 +7,8 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onExploreClick }) => {
   return (
     <section
-      id="about"
-      className="relative w-full min-h-screen flex flex-col justify-between items-center px-6 sm:px-12 md:px-16 pt-24 sm:pt-28 pb-10 max-w-4xl mx-auto"
+      id="home"
+      className="relative w-full min-h-screen flex flex-col justify-between items-center px-6 sm:px-12 md:px-16 pt-24 sm:pt-28 pb-10 max-w-4xl mx-auto scroll-mt-20"
     >
       {/* Central Content: Avatar + Statement */}
       <div className="flex-1 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 md:gap-16 w-full my-auto">

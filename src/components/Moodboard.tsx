@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, RefreshCw, AlertCircle, Sparkles, ImageIcon } from 'lucide-react';
+import { ExternalLink, RefreshCw, AlertCircle, ImageIcon } from 'lucide-react';
 
 interface ArenaBlock {
   id: number | string;
@@ -56,7 +56,7 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
             break;
           }
         } catch {
-          // continuar al siguiente
+          // continue to next proxy
         }
       }
 
@@ -72,7 +72,7 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
         const validBlocks = data.contents.filter((b: any) => b.image || b.content);
         setBlocks(validBlocks);
       } else {
-        throw new Error('No se pudo conectar con el canal de Are.na.');
+        throw new Error('Unable to fetch Are.na channel data.');
       }
     } catch (err: any) {
       console.warn('Are.na fetch info:', err);
@@ -87,7 +87,7 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
       } catch {
         // no-op
       }
-      setError('No se pudo sincronizar en vivo con Are.na. Podés visitar el canal directamente.');
+      setError('Unable to sync live with Are.na. You can visit the channel directly.');
     } finally {
       setLoading(false);
     }
@@ -99,37 +99,31 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
 
   return (
     <section id="moodboard" className="relative px-6 sm:px-12 md:px-16 max-w-5xl mx-auto pt-4 pb-20 sm:pb-28 scroll-mt-20">
-      {/* Header: Título limpio + Botón a Are.na */}
+      {/* Header in English */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#D97186] flex items-center gap-1.5">
-              <Sparkles size={14} />
-              Canal de Are.na · @lola-garcia-marelli
-            </span>
-          </div>
           <h2 className="text-xl sm:text-2xl font-bold text-[#1D1B1B] tracking-[-0.01em]">
-            Live Moodboard {channelTitle ? `— “${channelTitle}”` : ''}
+            Moodboard {channelTitle ? `— “${channelTitle}”` : ''}
           </h2>
           <p className="text-xs sm:text-sm text-[#5C5656] mt-0.5 max-w-xl">
-            Referencias visuales, piezas de archivo e inspiración estética en constante actualización.
+            Visual references, archive pieces, and aesthetic inspiration in continuous update.
           </p>
         </div>
 
-        {/* Botón directo para redirigir al canal en Are.na */}
+        {/* View on Are.na Link */}
         <a
           href={`https://www.are.na/channel/${channelSlug}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#D97186] bg-[#F4E9E1] hover:bg-[#EADBCE] border border-[#E5D7CC] rounded-xl transition-all duration-200 self-start sm:self-auto group shadow-2xs"
-          title="Ver canal completo en Are.na"
+          title="View full channel on Are.na"
         >
-          <span>Ver canal en Are.na</span>
+          <span>View on Are.na</span>
           <ExternalLink size={13} className="transform transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </div>
 
-      {/* Aviso de error discreto si falla la red */}
+      {/* Error notice in English */}
       {error && (
         <div className="mb-6 p-3 bg-[#FFF2F4] border border-[#F5C2CB] rounded-xl flex items-center justify-between text-xs text-[#9B2C47]">
           <div className="flex items-center gap-2">
@@ -140,24 +134,24 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
             onClick={fetchChannelData}
             className="font-semibold underline ml-2 hover:opacity-80 cursor-pointer"
           >
-            Reintentar
+            Retry
           </button>
         </div>
       )}
 
-      {/* Moodboard 100% Visual */}
+      {/* Visual Moodboard in English */}
       {loading ? (
         <div className="py-20 flex flex-col items-center justify-center gap-3 text-[#7A7270]">
           <RefreshCw size={24} className="animate-spin text-[#D97186]" />
-          <span className="text-xs font-medium">Cargando moodboard...</span>
+          <span className="text-xs font-medium">Loading moodboard...</span>
         </div>
       ) : blocks.length === 0 ? (
         <div className="py-16 text-center bg-[#F7EFE9] rounded-2xl border border-[#EFE3D9] p-6">
           <ImageIcon size={32} className="mx-auto text-[#A89E9A] mb-2" />
-          <p className="text-sm font-medium text-[#4A4545]">El canal está vacío.</p>
+          <p className="text-sm font-medium text-[#4A4545]">This channel is currently empty.</p>
         </div>
       ) : (
-        /* Grilla visual tipo masonry: 2 columnas en mobile, 3 en tablet y 4 en desktop */
+        /* Visual masonry grid: 2 columns on mobile, 3 on tablet, 4 on desktop */
         <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
           {blocks.map((block) => {
             const imgUrl =
@@ -166,9 +160,8 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
               block.image?.original?.url ||
               block.image?.thumb?.url;
             
-            // Priorizamos la fuente original (ej. Instagram, link web original) y si no, el bloque de Are.na
             const targetUrl = block.source?.url || `https://www.are.na/block/${block.id}`;
-            const altText = block.title || block.generated_title || 'Inspiración visual';
+            const altText = block.title || block.generated_title || 'Visual inspiration';
 
             return (
               <a
@@ -177,7 +170,7 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative block break-inside-avoid rounded-2xl overflow-hidden bg-[#EFE4DC] border border-[#EADBCE] shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-                title="Abrir imagen de origen"
+                title="Open original source"
               >
                 {imgUrl ? (
                   <img
@@ -192,7 +185,7 @@ export const Moodboard: React.FC<MoodboardProps> = ({ channelSlug = 'inspo-z5eag
                   </div>
                 )}
 
-                {/* Sutil halo al hover que indica interactividad */}
+                {/* Subtle hover icon */}
                 <div className="absolute inset-0 bg-[#D97186]/0 group-hover:bg-[#D97186]/10 transition-colors duration-300 pointer-events-none flex items-end justify-end p-3">
                   <div className="w-7 h-7 rounded-full bg-white/90 text-[#1D1B1B] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm backdrop-blur-xs">
                     <ExternalLink size={13} />

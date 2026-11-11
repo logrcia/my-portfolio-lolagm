@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Sparkles, Calendar, UserCheck, ExternalLink } from 'lucide-react';
+import { X, Calendar, UserCheck, ExternalLink } from 'lucide-react';
 import { Project } from '../types.ts';
 
 interface ProjectModalProps {
@@ -37,9 +37,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       />
 
       {/* Modal Dialog Card */}
-      <div className="relative w-full max-w-3xl bg-[#FAF4EF] rounded-[24px] border border-[#EADBCE] shadow-2xl overflow-hidden z-10 my-8 transition-all max-h-[90vh] flex flex-col">
+      <div className="relative w-full max-w-4xl bg-[#FAF4EF] rounded-[24px] border border-[#EADBCE] shadow-2xl overflow-hidden z-10 my-8 transition-all max-h-[92vh] flex flex-col">
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#EADBCE] bg-[#FAF4EF]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#EADBCE] bg-[#FAF4EF] shrink-0">
           <div>
             <span className="text-xs font-semibold tracking-wider uppercase text-[#D97186]">
               {project.category}
@@ -57,81 +57,70 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </button>
         </div>
 
-        {/* Scrollable Body */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
-          {/* Main Visual */}
-          <div className="w-full aspect-[796/460] rounded-2xl overflow-hidden bg-[#ECE1D8] border border-[#EADBCE] shadow-xs">
-            <img
-              src={project.thumbnail}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
+        {/* Scrollable Body: 2 columnas balanceadas (Izquierda: Imagen + Role/Year; Derecha: Overview + Tools) */}
+        <div className="p-6 sm:p-8 overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start">
+            {/* Columna Izquierda: Imagen contenida + Role & Year */}
+            <div className="md:col-span-5 flex flex-col gap-4">
+              <div className="w-full aspect-[796/460] rounded-2xl overflow-hidden bg-[#ECE1D8] border border-[#EADBCE] shadow-xs">
+                <img
+                  src={project.thumbnail}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-          {/* Quick Meta Strip */}
-          <div className="flex flex-wrap items-center gap-y-2 gap-x-6 py-3 px-4 rounded-xl bg-[#F4E9E1] border border-[#E8DCD1] text-xs sm:text-sm text-[#4A4545]">
-            <div className="flex items-center gap-1.5">
-              <UserCheck size={15} className="text-[#D97186]" />
-              <span>
-                <strong className="font-semibold text-[#1D1B1B]">Role:</strong> {project.role}
-              </span>
+              {/* Quick Meta Strip debajo de la imagen */}
+              <div className="flex flex-col gap-2 p-3.5 rounded-xl bg-[#F4E9E1] border border-[#E8DCD1] text-xs text-[#4A4545]">
+                <div className="flex items-center gap-2">
+                  <UserCheck size={14} className="text-[#D97186] shrink-0" />
+                  <span>
+                    <strong className="font-semibold text-[#1D1B1B]">Role:</strong> {project.role}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar size={14} className="text-[#D97186] shrink-0" />
+                  <span>
+                    <strong className="font-semibold text-[#1D1B1B]">Year:</strong> {project.year}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Calendar size={15} className="text-[#D97186]" />
-              <span>
-                <strong className="font-semibold text-[#1D1B1B]">Year:</strong> {project.year}
-              </span>
-            </div>
-          </div>
 
-          {/* Overview Section */}
-          <div>
-            <h3 className="text-base sm:text-lg font-bold text-[#1D1B1B] mb-2">
-              Project Overview
-            </h3>
-            <p className="text-sm sm:text-base leading-relaxed text-[#3B3636]">
-              {project.fullOverview}
-            </p>
-          </div>
+            {/* Columna Derecha: Project Overview + Tools & Software (sin key highlights) */}
+            <div className="md:col-span-7 flex flex-col gap-6">
+              {/* Project Overview */}
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-[#1D1B1B] mb-2.5">
+                  Project Overview
+                </h3>
+                <p className="text-sm sm:text-[15px] leading-relaxed text-[#3B3636]">
+                  {project.fullOverview}
+                </p>
+              </div>
 
-          {/* Highlights */}
-          {project.highlights && project.highlights.length > 0 && (
-            <div>
-              <h3 className="text-base sm:text-lg font-bold text-[#1D1B1B] mb-2.5 flex items-center gap-2">
-                <Sparkles size={16} className="text-[#D97186]" />
-                Key Highlights
-              </h3>
-              <ul className="space-y-2 text-sm sm:text-base text-[#3B3636]">
-                {project.highlights.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
-                    <span className="text-[#D97186] font-bold mt-1 text-sm">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Tools Used */}
-          <div>
-            <h3 className="text-sm sm:text-base font-bold text-[#1D1B1B] mb-2">
-              Tools & Software
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {project.tools.map((tool) => (
-                <span
-                  key={tool}
-                  className="px-3 py-1 rounded-lg text-xs font-medium bg-[#EFE3D9] text-[#2C2727] border border-[#E2D4C9]"
-                >
-                  {tool}
-                </span>
-              ))}
+              {/* Tools & Software */}
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-[#1D1B1B] mb-2.5">
+                  Tools & Software
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="px-3 py-1 rounded-lg text-xs font-medium bg-[#EFE3D9] text-[#2C2727] border border-[#E2D4C9]"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Footer: Reemplazado botón cerrar por enlace directo a Behance en inglés */}
-        <div className="px-6 py-4 bg-[#F5ECE4] border-t border-[#EADBCE] flex items-center justify-between">
+        {/* Footer: Botón a Behance abajo a la derecha */}
+        <div className="px-6 py-4 bg-[#F5ECE4] border-t border-[#EADBCE] flex items-center justify-between shrink-0">
           <span className="text-xs text-[#7A7270] font-medium hidden sm:inline">
             Explore full project gallery
           </span>

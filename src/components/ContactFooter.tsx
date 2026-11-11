@@ -14,43 +14,73 @@ export const ContactFooter: React.FC = () => {
   };
 
   return (
-    <footer id="contact" className="w-full bg-[#D97186] text-white py-10 sm:py-12 px-6 sm:px-12 md:px-16 select-none relative scroll-mt-20">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 text-center md:text-left">
-        {/* "Contact me!" */}
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight shrink-0">
+    <footer
+      id="contact"
+      className="w-full min-h-screen bg-[#D97186] text-white flex flex-col justify-between px-6 sm:px-12 md:px-16 pt-24 sm:pt-28 pb-10 select-none relative scroll-mt-16 overflow-hidden"
+    >
+      {/* Central Content: Sublabel + Title + Centered Illustration + Action Buttons */}
+      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full text-center my-auto">
+        <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-white/80 mb-2">
+          Get in touch
+        </span>
+
+        {/* Title */}
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 sm:mb-6">
           Contact me!
         </h2>
 
-        {/* Email Link with Quick Copy */}
-        <div className="flex items-center gap-2">
-          <a
-            href={`mailto:${email}`}
-            className="text-sm sm:text-base font-medium tracking-wide text-white hover:text-white/80 transition-colors underline-offset-4 hover:underline"
-          >
-            {email}
-          </a>
-          <button
-            onClick={handleCopyEmail}
-            title="Copiar email"
-            className="p-1.5 rounded-md hover:bg-white/15 transition-colors cursor-pointer text-white/90 hover:text-white"
-            aria-label="Copiar dirección de email"
-          >
-            {copied ? <Check size={16} className="text-emerald-200" /> : <Copy size={16} />}
-          </button>
+        {/* Centered Illustration with subtle white rim shadow for optimal contrast on pink background */}
+        <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 my-2 sm:my-4 flex items-center justify-center">
+          <img
+            src="/assets/contact_lola.png"
+            alt="Lola García Marelli saludo ilustración"
+            className="w-full h-full object-contain filter drop-shadow-[0_8px_20px_rgba(0,0,0,0.18)] select-none transition-transform duration-300 hover:scale-105"
+            draggable={false}
+          />
         </div>
 
-        {/* Behance Link */}
-        <div className="shrink-0">
+        {/* Action Box: Email copy & Behance */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mt-4 sm:mt-6">
+          {/* Email button with copy */}
+          <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-3 bg-white/15 hover:bg-white/20 border border-white/25 rounded-2xl px-5 py-3 transition-all duration-200">
+            <a
+              href={`mailto:${email}`}
+              className="text-sm sm:text-base font-medium tracking-wide text-white hover:text-white/90 underline-offset-4 hover:underline"
+            >
+              {email}
+            </a>
+            <button
+              onClick={handleCopyEmail}
+              title="Copiar email"
+              className="p-1.5 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white/90 hover:text-white shrink-0"
+              aria-label="Copiar dirección de email"
+            >
+              {copied ? <Check size={18} className="text-emerald-200" /> : <Copy size={18} />}
+            </button>
+          </div>
+
+          {/* Behance Link */}
           <a
             href="https://behance.net/logrcia"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm sm:text-base font-medium text-white hover:text-white/80 transition-colors underline-offset-4 hover:underline"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white text-[#D97186] hover:bg-white/95 font-semibold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200"
           >
             <span>{behance}</span>
-            <ExternalLink size={14} className="opacity-80" />
+            <ExternalLink size={16} />
           </a>
         </div>
+      </div>
+
+      {/* Footer bottom small print / credit */}
+      <div className="w-full max-w-5xl mx-auto pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/80">
+        <span>© {new Date().getFullYear()} Lola García Marelli · Multimedia Designer</span>
+        <a
+          href="#home"
+          className="hover:text-white transition-colors underline-offset-4 hover:underline"
+        >
+          Back to top ↑
+        </a>
       </div>
 
       {/* Floating Copied Toast */}
