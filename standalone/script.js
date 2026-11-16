@@ -278,3 +278,133 @@ if (channelForm) {
 
 // Iniciar carga del canal de Are.na propio de Lola
 fetchArenaChannel('inspo-z5eag9wxqag');
+
+// ==========================================================================
+// 4. ABOUT DISCIPLINE GALLERY (DOODLE FRAMES COLLAGE)
+// ==========================================================================
+const aboutGalleryData = {
+  art: {
+    heading: 'Some of my work',
+    items: [
+      {
+        title: 'Fluid Pink & Gold Bloom',
+        src: '../public/assets/aistudio/arte1_8c8a4ea4.PNG',
+        rotation: '-rotate-1',
+        customFrame: true
+      },
+      {
+        title: 'Peony & Ferns on Turquoise',
+        src: '../public/assets/aistudio/arte2_8af23744.PNG',
+        rotation: 'rotate-1',
+        customFrame: true
+      },
+      {
+        title: 'Pastel Botanicals',
+        src: '../public/assets/aistudio/arte3_6b15eaf2.PNG',
+        rotation: '-rotate-1',
+        customFrame: true
+      }
+    ]
+  },
+  photography: {
+    heading: 'Some of my work',
+    items: [
+      {
+        title: 'Calm Horizon & White Sailboat',
+        src: '../public/assets/aistudio/ph1_00f9ea6a.PNG',
+        rotation: '-rotate-1',
+        customFrame: true
+      },
+      {
+        title: 'Sunlit Garden Companion',
+        src: '../public/assets/aistudio/ph2_f3451e26.PNG',
+        rotation: 'rotate-1',
+        customFrame: true
+      },
+      {
+        title: 'Quiet Bay & Wooden Boat',
+        src: '../public/assets/aistudio/ph3_9fcd3d99.PNG',
+        rotation: '-rotate-1',
+        customFrame: true
+      }
+    ]
+  },
+  illustration: {
+    heading: 'Some of my work',
+    items: [
+      {
+        title: 'Character Study with Stars',
+        src: '../public/assets/aistudio/illustration1_c2468892.PNG',
+        rotation: '-rotate-1',
+        customFrame: true
+      },
+      {
+        title: 'Floral Bouquet Portrait',
+        src: '../public/assets/aistudio/illustration2_c000b534.PNG',
+        rotation: 'rotate-1',
+        customFrame: true
+      }
+    ]
+  }
+};
+
+let currentAboutCategory = null;
+const galleryContainer = document.getElementById('aboutGalleryContainer');
+const galleryHeading = document.getElementById('galleryHeading');
+const galleryItemsContainer = document.getElementById('galleryItemsContainer');
+const discBtns = document.querySelectorAll('.disc-btn');
+
+function renderAboutGallery(catKey) {
+  if (!galleryContainer || !galleryHeading || !galleryItemsContainer) return;
+  const data = aboutGalleryData[catKey];
+  if (!data) return;
+
+  galleryHeading.textContent = data.heading;
+
+  if (data.items.length >= 3) {
+    galleryItemsContainer.classList.add('three-cols');
+  } else {
+    galleryItemsContainer.classList.remove('three-cols');
+  }
+
+  galleryItemsContainer.innerHTML = '';
+  data.items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = `gallery-framed-item ${item.rotation} ${item.customFrame ? 'custom-frame' : ''}`;
+    card.innerHTML = `
+      <div class="gallery-image-box">
+        <img src="${item.src}" alt="${item.title}" loading="lazy" />
+      </div>
+    `;
+    galleryItemsContainer.appendChild(card);
+  });
+}
+
+discBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const category = btn.getAttribute('data-category');
+    if (currentAboutCategory === category) {
+      // Toggle off
+      currentAboutCategory = null;
+      btn.classList.remove('active');
+      const arrow = btn.querySelector('.disc-arrow');
+      if (arrow) arrow.textContent = '↓';
+      if (galleryContainer) galleryContainer.style.display = 'none';
+    } else {
+      // Toggle on / switch
+      discBtns.forEach(b => {
+        b.classList.remove('active');
+        const arrow = b.querySelector('.disc-arrow');
+        if (arrow) arrow.textContent = '↓';
+      });
+
+      currentAboutCategory = category;
+      btn.classList.add('active');
+      const arrow = btn.querySelector('.disc-arrow');
+      if (arrow) arrow.textContent = '✕';
+
+      renderAboutGallery(category);
+      if (galleryContainer) galleryContainer.style.display = 'block';
+    }
+  });
+});

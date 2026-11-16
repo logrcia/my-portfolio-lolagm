@@ -16,21 +16,21 @@ export const ContactFooter: React.FC = () => {
   return (
     <footer
       id="contact"
-      className="w-full min-h-screen bg-[#D97186] text-white flex flex-col justify-between px-6 sm:px-12 md:px-16 pt-24 sm:pt-28 pb-10 select-none relative scroll-mt-16 overflow-hidden"
+      className="w-full min-h-screen bg-[#D97186] text-white flex flex-col justify-between px-6 sm:px-12 md:px-16 pt-20 sm:pt-24 pb-8 sm:pb-10 select-none relative scroll-mt-16 overflow-hidden"
     >
-      {/* Central Content: Sublabel + Title + Centered Illustration + Action Buttons */}
-      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full text-center my-auto">
-        <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-white/80 mb-2">
+      {/* Central Content: Sublabel + Title (Caveat script font) + Centered Illustration + Friendly message + Action Buttons */}
+      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full text-center my-auto py-6">
+        <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-white/80 mb-1">
           Get in touch
         </span>
 
-        {/* Title */}
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 sm:mb-6">
+        {/* Title with the script font ('Caveat') matching 'Lola' in Hero */}
+        <h2 className="font-script text-5xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold text-white tracking-normal leading-tight mb-2 sm:mb-3 inline-block transform -rotate-1">
           Contact me!
         </h2>
 
         {/* Centered Illustration with subtle white rim shadow for optimal contrast on pink background */}
-        <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 my-2 sm:my-4 flex items-center justify-center">
+        <div className="w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 my-2 sm:my-3 flex items-center justify-center">
           <img
             src="/assets/contact_lola.png"
             alt="Lola García Marelli saludo ilustración"
@@ -39,10 +39,17 @@ export const ContactFooter: React.FC = () => {
           />
         </div>
 
-        {/* Action Box: Email copy & Behance */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mt-4 sm:mt-6">
+        {/* Friendly text in English above buttons */}
+        <p className="text-base sm:text-lg md:text-[19px] text-white/95 font-medium max-w-lg mx-auto leading-relaxed mt-2 mb-6 sm:mb-8">
+          If you have any questions or thoughts, don't hesitate to drop me a message.
+          <br className="hidden sm:inline" />{' '}
+          I'm really excited to work with you!
+        </p>
+
+        {/* Action Box: Email copy & Behance with generous margin-bottom to create separation from footer */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-xl mb-12 sm:mb-16 md:mb-20">
           {/* Email button with copy */}
-          <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-3 bg-white/15 hover:bg-white/20 border border-white/25 rounded-2xl px-5 py-3 transition-all duration-200">
+          <div className="w-full sm:w-auto flex items-center justify-between sm:justify-start gap-3 bg-white/15 hover:bg-white/20 border border-white/25 rounded-2xl px-5 py-3 transition-all duration-200 shadow-xs">
             <a
               href={`mailto:${email}`}
               className="text-sm sm:text-base font-medium tracking-wide text-white hover:text-white/90 underline-offset-4 hover:underline"
@@ -51,9 +58,9 @@ export const ContactFooter: React.FC = () => {
             </a>
             <button
               onClick={handleCopyEmail}
-              title="Copiar email"
+              title="Copy email"
               className="p-1.5 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white/90 hover:text-white shrink-0"
-              aria-label="Copiar dirección de email"
+              aria-label="Copy email address"
             >
               {copied ? <Check size={18} className="text-emerald-200" /> : <Copy size={18} />}
             </button>
@@ -73,7 +80,7 @@ export const ContactFooter: React.FC = () => {
       </div>
 
       {/* Footer bottom small print / credit */}
-      <div className="w-full max-w-5xl mx-auto pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/80">
+      <div className="w-full max-w-5xl mx-auto pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/80 shrink-0">
         <span>© {new Date().getFullYear()} Lola García Marelli · Multimedia Designer</span>
         <a
           href="#home"
@@ -87,7 +94,7 @@ export const ContactFooter: React.FC = () => {
       {copied && (
         <div className="fixed bottom-6 right-6 bg-[#2B2727] text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 border border-white/10 z-50 animate-fade-in">
           <Check size={16} className="text-emerald-400" />
-          <span>¡Email copiado al portapapeles!</span>
+          <span>Email copied to clipboard!</span>
         </div>
       )}
     </footer>

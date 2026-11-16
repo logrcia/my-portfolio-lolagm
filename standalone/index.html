@@ -233,7 +233,46 @@
         <div class="bio-block">
           <h2 class="section-heading">About</h2>
           <p class="bio-text">
-            I'm a Multimedia Design student focused on art direction, branding, user experience, and video editing. I'm interested in concept-driven design and visual storytelling, creating cohesive identities where every element has a clear intention. My work combines creativity, attention to detail, and a strong visual sensibility, always aiming to communicate ideas in a clear and engaging way.
+            I'm a Multimedia Design student based in Buenos Aires, Argentina, with a strong interest in art direction, visual identity, and visual storytelling.
+          </p>
+          <p class="bio-text" style="margin-top: 1rem;">
+            Beyond digital design, I'm passionate about exploring different artistic disciplines, especially painting with acrylics and watercolors, photography, and illustration. I enjoy experimenting with different techniques and materials, and finding ways to bring a more human and personal touch to my work.
+          </p>
+
+          <!-- 3 BOTONES DE DISCIPLINAS ARTÍSTICAS -->
+          <div class="about-discipline-buttons">
+            <button type="button" class="disc-btn" data-category="art">
+              <span>🎨 Art</span>
+              <span class="disc-arrow" id="arrow-art">↓</span>
+            </button>
+            <button type="button" class="disc-btn" data-category="photography">
+              <span>📷 Photography</span>
+              <span class="disc-arrow" id="arrow-photography">↓</span>
+            </button>
+            <button type="button" class="disc-btn" data-category="illustration">
+              <span>✏️ Illustration</span>
+              <span class="disc-arrow" id="arrow-illustration">↓</span>
+            </button>
+          </div>
+
+          <!-- GALERÍA DESPLEGABLE CON MARCOS ESTILO DOODLE -->
+          <div id="aboutGalleryContainer" class="about-gallery-unfolded" style="display: none;">
+            <div class="gallery-unfolded-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 id="galleryHeading" class="gallery-heading"></h3>
+                <span class="heart-doodle">♡</span>
+              </div>
+            </div>
+
+            <div id="galleryItemsContainer" class="gallery-items-grid"></div>
+
+            <div class="gallery-footer-hint">
+              <span>Click on any piece to enlarge ✦</span>
+            </div>
+          </div>
+
+          <p class="bio-text" style="margin-top: 1rem;">
+            My creative process often starts on paper, where I sketch, explore ideas, and experiment before bringing them into the digital world. I believe that every visual decision should have a purpose, and I'm particularly interested in creating work that connects aesthetics with meaning and narrative.
           </p>
         </div>
 
@@ -257,6 +296,11 @@
       <div class="footer-illustration-wrapper">
         <img src="../public/assets/contact_lola.png" alt="Lola García Marelli saludo ilustración" class="footer-illustration" />
       </div>
+
+      <p class="footer-friendly-text">
+        If you have any questions or thoughts, don't hesitate to drop me a message.<br>
+        I'm really excited to work with you!
+      </p>
 
       <div class="footer-actions">
         <div class="footer-email-box">

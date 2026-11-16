@@ -633,7 +633,8 @@ body {
 }
 
 .bio-container {
-  max-width: 820px;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -692,17 +693,20 @@ body {
 }
 
 .footer-heading {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 8px;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(3.2rem, 7vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  transform: rotate(-1deg);
+  display: inline-block;
 }
 
 .footer-illustration-wrapper {
-  width: 220px;
-  height: 220px;
-  margin: 12px auto 20px;
+  width: 200px;
+  height: 200px;
+  margin: 8px auto 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -710,9 +714,19 @@ body {
 
 @media (min-width: 640px) {
   .footer-illustration-wrapper {
-    width: 250px;
-    height: 250px;
+    width: 240px;
+    height: 240px;
   }
+}
+
+.footer-friendly-text {
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 500px;
+  margin: 6px auto 26px;
+  line-height: 1.6;
+  text-align: center;
 }
 
 .footer-illustration {
@@ -734,6 +748,7 @@ body {
   gap: 20px;
   width: 100%;
   max-width: 540px;
+  margin-bottom: clamp(40px, 7vw, 64px);
 }
 
 @media (min-width: 640px) {
@@ -1043,4 +1058,212 @@ body {
 
 .toast-notification.show {
   display: block;
+}
+
+/* ==========================================================================
+   11. ABOUT DISCIPLINE GALLERY (DOODLE FRAMES COLLAGE)
+   ========================================================================== */
+.about-discipline-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 22px 0;
+  width: 100%;
+}
+
+.disc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 2px solid #1E1B1B;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1E1B1B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.disc-btn:hover {
+  border-color: var(--accent-pink);
+  color: var(--accent-pink);
+  background: #ffffff;
+}
+
+.disc-btn.active {
+  background: #1E1B1B;
+  color: #FAF4EF;
+  border-color: #1E1B1B;
+  transform: scale(1.02);
+}
+
+.about-gallery-unfolded {
+  margin: 20px 0 24px;
+  padding: 24px;
+  background: #F6ECE4;
+  border: 2px solid #1E1B1B;
+  border-radius: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.gallery-unfolded-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.gallery-heading {
+  font-family: 'Caveat', cursive;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent-pink);
+  transform: rotate(-1deg);
+  display: inline-block;
+  margin: 0;
+}
+
+.heart-doodle {
+  color: var(--accent-pink);
+  font-size: 18px;
+  display: inline-block;
+}
+
+.gallery-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+  color: #554E4E;
+  margin: 2px 0 0;
+}
+
+.close-gallery-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(30, 27, 27, 0.3);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1E1B1B;
+  transition: all 0.2s;
+}
+
+.close-gallery-btn:hover {
+  background: #ffffff;
+  color: var(--accent-pink);
+}
+
+.gallery-items-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  justify-items: center;
+  padding: 10px 0;
+}
+
+@media (min-width: 640px) {
+  .gallery-items-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .gallery-items-grid.three-cols {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+.gallery-framed-item {
+  position: relative;
+  background: #FCF8F5;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(30, 27, 27, 0.08);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  max-width: 280px;
+  width: 100%;
+}
+
+.gallery-framed-item.custom-frame {
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.gallery-framed-item:hover {
+  transform: scale(1.03);
+  z-index: 2;
+}
+
+.gallery-image-box {
+  width: 100%;
+  height: 230px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #f0ebe6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-framed-item.custom-frame .gallery-image-box {
+  background: transparent;
+  height: 250px;
+  overflow: visible;
+}
+
+.gallery-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.gallery-framed-item.custom-frame .gallery-image-box img {
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(30, 27, 27, 0.12));
+}
+
+.gallery-framed-item:hover .gallery-image-box img {
+  transform: scale(1.04);
+}
+
+.gallery-item-caption {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.gallery-item-title {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1E1B1B;
+  line-height: 1.2;
+}
+
+.gallery-item-medium {
+  font-size: 11px;
+  color: #635C5C;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.gallery-footer-hint {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(30, 27, 27, 0.15);
+  font-family: 'Caveat', cursive;
+  font-size: 15px;
+  color: #6E6666;
 }
