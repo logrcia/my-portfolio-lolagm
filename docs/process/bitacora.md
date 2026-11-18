@@ -1,78 +1,101 @@
 # Bitácora y Evidencia de Proceso
-**Proyecto**: Portfolio Lola García Marelli – Diseño Multimedia  
+
+**Proyecto**: Portfolio Web Personal e Interactivo — Lola García Marelli  
+**Materia**: Programación Multimedial IV  
 **Institución**: Universidad Maimónides  
 
 ---
 
-## 1. Exploración inicial y moodboard de partida
-El punto de partida del proyecto fue un diseño previo montado en la plataforma **Readymag** (`my.readymag.com_edit_6294031_preview___2__e989ec82.png`). 
+## 1. Problema de comunicación que se buscó resolver
 
-### Elementos de identidad identificados:
-- **Tono general**: Cálido, orgánico, lúdico pero con acabado editorial sobrio.
-- **Color dominante**: Fondo crema suave (`#FAF4EF`) y acento frambuesa/rosa viejo (`#D97186`).
-- **Ilustración personal**: Avatar chibi de trazo texturado con pendientes dorados, pecas y mirada expresiva.
-- **Texturas artesanales**: Conjunto de flores esbozadas a mano con lápiz de grafito.
+El desafío principal fue construir un portfolio digital que no se sintiera como un currículum rígido ni una plantilla genérica, sino como una extensión coherente de la identidad visual de Lola: **cálida, artesanal, editorial y cercana**, capaz de mostrar tanto su perfil como diseñadora multimedial (dirección de arte, branding, edición de video) como su costado plástico y analógico (pintura, fotografía e ilustración).
 
 ---
 
-## 2. Iteración 1: Recorte y tratamiento de activos gráficos
-- **Problema encontrado**: Las ilustraciones de flores venían en un archivo blanco opaco (`IMG_4102_c943d7d4.PNG`).
-- **Solución implementada**: Mediante procesamiento de imagen con canal alfa y detección de luminosidad, se aislaron 3 variantes de flores (flor central grande, flor pequeña y flor rotada), aplicando `mix-blend-mode: multiply` para fundir el grano del grafito directamente sobre el tono crema del lienzo.
-- **Avatar**: Se verificó el canal alfa de `IMG_4103_55192ac4.PNG` para montarlo sin fondo blanco sobre el encabezado hero.
+## 2. Exploración inicial y alternativas evaluadas
+
+- **Referencia visual de partida**: Se partió de un prototipo visual previo armado en **Readymag** (`public/assets/aistudio/my.readymag.com_edit_6294031_preview___2__e989ec82.png`), del cual se extrajeron el tono crema (`#FAF4EF`), el rosa viejo (`#D97186`), el avatar ilustrado y la estética orgánica.
+- **Alternativas de estructura evaluadas**:
+  1. *Mostrar proyectos y biografía todos juntos desde el primer viewport*: Descartado porque recargaba la pantalla inicial y le quitaba protagonismo al avatar y a la presentación personal.
+  2. *Incluir un buscador abierto de canales de Are.na en el Moodboard*: Probado en una iteración intermedia y luego **descartado**, ya que rompía la curaduría estética del sitio; se priorizó mantener el canal personal fijo (`inspo-z5eag9wxqag`) con botón directo para explorarlo en Are.na.
+  3. *Generar páginas separadas para las disciplinas artísticas (Art / Photography / Illustration)*: Descartado en favor de un acordeón desplegable dentro de la misma sección *About*, manteniendo el flujo de lectura continuo sin perder el contexto biográfico.
 
 ---
 
-## 3. Iteración 2: El primer prototipo y feedback sobre tecnologías
-- **Requisito inicial del usuario**: Se solicitó explícitamente no utilizar Astro JS ni Vite para la entrega base.
-- **Acción realizada**: 
-  - Se mantuvo la plantilla del entorno para visualizar el preview en vivo.
-  - Se desarrolló en paralelo la versión `standalone/index.html` con **HTML5 semántico puro**, `standalone/style.css` con **CSS nativo sin preprocesadores** y `standalone/script.js` con **Vanilla JavaScript**.
-  - Ambas versiones se mantienen al 100% en paridad de diseño y comportamiento.
+## 3. Evolución de la estructura, identidad visual e interacciones
+
+### Iteración 1 — Activos gráficos e ilustraciones propias
+- Se recortaron y procesaron las ilustraciones de flores a lápiz (`IMG_4102_c943d7d4.PNG`) aplicando transparencia y `mix-blend-mode: multiply` para conservar la textura de grafito sobre el fondo crema.
+- Se integró el avatar ilustrado de Lola en el encabezado inicial.
+
+### Iteración 2 — Rediseño del Hero Fullscreen y Navbar
+- Se configuró el **Hero** a pantalla completa (`min-h-screen`) para que en el primer impacto visual solo aparezcan la navbar, el avatar, la presentación con *"Lola"* en tipografía caligráfica (*Caveat*) y el botón *"Take a look! ↓"*.
+- Se simplificó la barra de navegación: se eliminó la pestaña redundante `"Home"` haciendo clickeable el nombre **"LOLA GARCÍA MARELLI"** para volver arriba, y se reordenaron las secciones en: `Work · Moodboard · Tools · About · Contact`.
+
+### Iteración 3 — Refinamiento de Proyectos y Modales
+- Se vincularon las 4 tarjetas (*“Mírenlas”*, *Mila Mia*, *Social Media Content* y *Experimental Art Video*) a sus respectivas publicaciones reales en **Behance**.
+- Se rediseñó el modal de detalle: se eliminó la sección de *Key Highlights* para evitar sobrecarga de texto y se reordenó en **2 columnas** (imagen más contenida + *Role* y *Year* a la izquierda; *Project Overview* y *Tools & Software* a la derecha; botón *"View on Behance ↗"* abajo).
+
+### Iteración 4 — Curaduría e idioma del Moodboard (API de Are.na)
+- Se migró toda la sección *Moodboard* al inglés (*"Moodboard — “inspo”"*), se eliminó el subtítulo redundante del usuario y se priorizó un layout tipo *masonry* limpio (2 columnas desde mobile hasta 4 en desktop).
+- Se conectó el canal público `inspo-z5eag9wxqag` mediante la API v2 de Are.na.
+
+### Iteración 5 — Consistencia visual en la franja de Tools
+- Se amplió la grilla a **8 herramientas** (*Photoshop, Illustrator, Premiere, Figma, CapCut, After Effects, Procreate, Notion*), todas encerradas en contenedores cuadrados con borde uniforme `rounded-[15px]` y transición cromática `#1E1B1B → #D97186`.
+- Se corrigieron tres logotipos críticos tras revisar el resultado visual:
+  - **Procreate**: Se reemplazó por el isotipo oficial aportado por la autora (`procreate_b5b3012c.png`) usando máscara CSS para heredar el color y hover del tema.
+  - **CapCut** y **Notion**: Se invirtieron de relleno sólido a diseño lineal/contorneado para que se distingan con claridad las líneas internas del símbolo de CapCut y la perspectiva 3D junto a la «N» de Notion.
+
+### Iteración 6 — Sección Contact a pantalla completa
+- Se llevó `#contact` a `min-h-screen` con fondo `#D97186`.
+- Se incorporó la ilustración propia de despedida (`contact_lola.png`) centrada entre el título y los botones, con sombra suave para mejorar la separación visual respecto del fondo rosa.
+- Se unificó la tipografía de *"Contact me!"* usando *Caveat* (igual que *"Lola"* en el Hero), se agregó un mensaje cercano en inglés sobre los botones de Email/Behance y se amplió el margen inferior respecto al footer.
+
+### Iteración 7 — Evolución de About y Galería interactiva por disciplinas
+- Se actualizó el texto biográfico de *About* en tres párrafos redactados en inglés reflejando el enfoque artístico de Lola en Buenos Aires y su proceso desde el papel hacia lo digital.
+- Se corrigieron los márgenes del bloque para igualar el ancho simétrico del resto de la página (`max-w-5xl`).
+- Se desarrolló `AboutGallery` con tres botones centrados (**Art**, **Photography**, **Illustration**), configurando **Art abierto por defecto** al cargar la página para visibilizar las obras de entrada.
+- Se reemplazaron las imágenes de prueba por obras reales con marcos ilustrados propios (`arte1..3`, `ph1..3`, `illustration1..2`), se unificó el título superior a *"Some of my work ♡"*, se eliminaron subtítulos, títulos individuales y el botón `✕` redundante (ya que se cierra haciendo clic sobre el botón activo).
+
+### Iteración 7 — Actualización en tiempo real de la API de Are.na (`Moodboard`)
+- Se diagnosticó por qué las nuevas imágenes conectadas al tablero de Are.na no se reflejaban en el portfolio: los proxies públicos previos (`corsproxy.io` devolviendo `403` y `allorigins.win` en `522`) fallaban en silencio y forzaban la carga del respaldo estático de 4 imágenes; además, el endpoint raíz v2 de Are.na cachea respuestas por 7 días (`max-age=604800`).
+- Se eliminó la dependencia de proxies externos: el portfolio consulta directamente a `api.are.na` (que habilita `Access-Control-Allow-Origin: *`) usando el endpoint paginado sin caché `/v2/channels/inspo-z5eag9wxqag/contents?per=100&sort=position&direction=desc` con `cache: 'no-store'` y cache-busting (`_t`), más respaldo automático con Are.na API v3.
+- Se incorporó sincronización continua cada 30 segundos, re-sincronización automática al volver a enfocar la pestaña (`visibilitychange` / `focus`), y un botón de refresco manual junto a *"View on Are.na"*.
 
 ---
 
-## 4. Iteración 3: Composición de la primera pantalla (Fullscreen fold)
-- **Desafío**: El usuario requería que al abrir la web en pantalla completa solo fueran visibles la barra de navegación, la ilustración, el texto de bienvenida y el botón *"Take a look! ↓"*.
-- **Solución**:
-  - Se definió para la sección `#about` una altura mínima de `calc(100vh - 56px)`.
-  - Se utilizó `flex-direction: column` con `justify-content: space-between` de modo que el contenido principal quede centrado verticalmente y el botón con la flecha rebotando quede pegado al borde inferior visible, induciendo al usuario al scroll.
+## 4. Dificultades técnicas encontradas y cómo se resolvieron
+
+| Problema encontrado | Causa detectada | Solución aplicada |
+| :--- | :--- | :--- |
+| **Nuevas imágenes de Are.na no aparecían (proxies caídos + caché)** | `corsproxy.io` (`403`) y `allorigins.win` (`522`) dejaron de funcionar, forzando el fallback local; además, `/v2/channels/{slug}` enviaba `max-age=604800` (7 días de caché). | Se reemplazaron los proxies por llamadas directas a `api.are.na/v2/channels/{slug}/contents` (`max-age=0, must-revalidate`, paginación completa y orden descendente), respaldo v3, `cache: 'no-store'`, polling cada 30s, sync al volver a la pestaña y actualización de `public/assets/inspo_channel_backup.json`. |
+| **Error `ERESOLVE` al desplegar en Vercel** | Conflicto de dependencias pares en `package.json`: `vite@8.3.x` esperaba `esbuild@^0.27.0 \|\| ^0.28.0`, pero figuraba `esbuild@^0.25.0`. | Se actualizó `esbuild` a `^0.28.0` en `devDependencies`, validado mediante `npm install --dry-run` y build de Vite sin conflictos. |
+| **Doble marco en la galería de About** | Al recibir las obras finales con su marco doodle dibujado en el PNG, el contenedor React agregaba un segundo marco SVG por encima. | Se agregó la variante `frameStyle: 'custom'` para renderizar limpiamente los PNG enmarcados sin superponer bordes ni fondos extra. |
+| **Logos empastados en Tools** | Los vectores iniciales de *CapCut* y *Notion* usaban relleno sólido sin respetar el calado interno. | Rediseño en SVG de trazo (`stroke="currentColor"`) y máscara CSS para *Procreate*. |
 
 ---
 
-## 5. Iteración 4: Reorganización de la barra de navegación
-- **Estructura anterior**: Únicamente nombre y subtítulo estáticos.
-- **Nueva estructura**:
-  - `LOLA GARCÍA MARELLI` a la izquierda.
-  - Enlaces activos a la derecha: `About · Work · Live moodboard · Tools · Contact`.
-  - Se implementó `scroll-margin-top` en cada sección para que la barra fija no tape los títulos al navegar.
+## 5. Pruebas en distintos tamaños de pantalla
+
+Durante cada iteración se verificó el comportamiento visual y de interacción en distintos anchos de pantalla:
+- **Mobile (`~375px`)**: Verificación de navbar apilada sin desbordes horizontales, Hero centrado, grilla de proyectos a 1 columna, *Moodboard* a 2 columnas legibles, *Tools* a 2 columnas, botones de *About* envueltos de forma centrada y sección *Contact* sin solapamiento entre botones y copyright.
+- **Tablet (`~768px`)**: Grillas intermedias a 2 columnas en *Work* y *AboutGallery*, 3 columnas en *Moodboard* y 4 columnas en *Tools*.
+- **Desktop (`1280px+`)**: Hero y *Contact* ocupando el viewport completo de forma equilibrada, franja horizontal de las 8 herramientas en una sola fila, galería de 3 columnas en *Art* / *Photography* y modal de proyectos en 2 columnas.
 
 ---
 
-## 6. Iteración 5: Investigación e integración de la API de Are.na
-- **Requisito**: Incorporar la API pública de Are.na sin API Key en la sección Moodboard.
-- **Obstáculo técnico detectado**: 
-  - Al realizar peticiones `fetch()` directamente desde el navegador a `https://api.are.na/v2/channels/...`, la API de Are.na bloquea las llamadas por falta de cabeceras CORS (`Access-Control-Allow-Origin`).
-  - Adicionalmente, Are.na exige un `User-Agent` descriptivo para evitar bloqueos por bots.
-- **Estrategia de resolución**:
-  1. Se implementó una conexión a través de proxies CORS transparentes (`corsproxy.io` y `allorigins.win`).
-  2. Se configuró un componente con manejo de los 3 estados fundamentales: **cargando** (spinner animado), **éxito** (grilla responsiva de tarjetas con enlaces y etiquetas de clase) y **error/fallback** (aviso claro con opción de reintentar y datos de muestra curados).
-  3. Se añadió un campo de búsqueda en vivo que permite a Lola escribir cualquier slug de canal público para explorarlo en tiempo real.
+## 6. Registro de Uso de Inteligencia Artificial
+
+- **Para qué se utilizó**: Generación inicial de estructura de componentes, refactorización de CSS/Tailwind responsive, diagnóstico del error CORS en Are.na y del conflicto `ERESOLVE` en Vercel, y prototipado temporal de imágenes hasta incorporar las piezas originales de la autora.
+- **Qué se revisó, adaptó o descartó**: Se descartaron componentes propuestos que recargaban el diseño (filtros innecesarios, *Key Highlights*, buscador libre de canales); se corrigieron los SVGs de herramientas y el estilo de marcos de la galería para ajustarlos a la estética dibujada a mano de Lola.
+- **Límites detectados**: Dificultad inicial de los modelos para reproducir fielmente logos con trazos invertidos sin referencia directa, y uso inicial de Vite + React en lugar de AstroJS como framework base.
+- **Decisiones propias de la autora**: Selección integral de paleta, tipografías, contenido editorial en inglés, curaduría de proyectos reales de Behance, fotografía/pintura/ilustración propias, jerarquía de secciones y flujo de interacción de la galería.
 
 ---
 
-## 7. Iteración 6: Ampliación de la sección de herramientas
-- Se expandió la grilla de 4 a 8 herramientas:
-  1. **Photoshop** (`Ps`)
-  2. **Illustrator** (`Ai`)
-  3. **Premiere** (`Pr`)
-  4. **Figma** (Vector SVG oficial)
-  5. **CapCut** (`Cc`)
-  6. **After Effects** (`Ae`)
-  7. **Procreate** (Ícono de lápiz/pincel digital)
-  8. **Notion** (Monograma con serifa)
-- Se adaptó la cuadrícula para desplegarse en 2 columnas en mobile, 4 en tablet y 8 en monitor de escritorio dentro de la franja con bordes punteados rosados.
+## 7. Estado actual y puntos pendientes antes de la entrega final
 
----
-
-## 8. Conclusión de la etapa
-El proyecto satisface la totalidad de las pautas visuales y funcionales del brief, con código limpio, modular, accesible y documentado para su entrega y defensa académica.
+1. **Migración a AstroJS (Prioridad alta)**: El proyecto funciona actualmente sobre React + Vite (y una copia estática en `/standalone/`). Falta migrar la arquitectura al framework **AstroJS** exigido como único requisito tecnológico obligatorio de la consigna.
+2. **Validación final del Deploy en Vercel**: Confirmar la URL pública en producción tras subir el commit con `esbuild` corregido (y posteriormente tras migrar a AstroJS) y testearla en dispositivos móviles y escritorio reales.
+3. **Ajustes menores de accesibilidad y consistencia**: Agregar estilos de foco visibles (`:focus-visible`) para navegación con teclado, soporte de tecla `Escape` en el *lightbox* de `AboutGallery`, y traducir al inglés algunos atributos `alt`/`aria-label` internos restantes.
+4. **Capturas visuales en `docs/process/`**: Sumar capturas de pantalla comparativas de la evolución (desktop y mobile) como respaldo visual directo para la defensa oral.

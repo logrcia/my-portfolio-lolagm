@@ -313,7 +313,7 @@ const DoodleHeart: React.FC<{ className?: string }> = ({ className = 'w-5 h-5' }
 );
 
 export const AboutGallery: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<GalleryCategory>(null);
+  const [activeCategory, setActiveCategory] = useState<GalleryCategory>('art');
   const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
 
   const toggleCategory = (cat: Exclude<GalleryCategory, null>) => {

@@ -139,80 +139,130 @@ const moodboardFeedback = document.getElementById('moodboardFeedback');
 const channelForm = document.getElementById('channelForm');
 const channelInput = document.getElementById('channelInput');
 const arenaExternalLink = document.getElementById('arenaExternalLink');
+const arenaRefreshBtn = document.getElementById('arenaRefreshBtn');
 
-async function fetchArenaChannel(slug) {
+const ARENA_POLL_MS = 30000;
+const ARENA_FOCUS_THROTTLE_MS = 5000;
+let activeChannelSlug = 'inspo-z5eag9wxqag';
+let lastArenaFetchAt = 0;
+let hasRenderedArenaBlocks = false;
+
+function normalizeStandaloneV3Block(item) {
+  const img = item.image;
+  return {
+    id: item.id,
+    title: item.title ?? null,
+    generated_title: item.title ?? undefined,
+    class: item.type || item.base_type || 'Block',
+    image: img
+      ? {
+          display: img.medium?.src ? { url: img.medium.src } : undefined,
+          large: img.large?.src ? { url: img.large.src } : undefined,
+          original: img.src ? { url: img.src } : undefined,
+          thumb: img.small?.src ? { url: img.small.src } : undefined,
+        }
+      : undefined,
+    content: typeof item.content === 'string' ? item.content : undefined,
+    source: item.source?.url ? { url: item.source.url, title: item.source.title } : undefined,
+  };
+}
+
+async function fetchStandaloneV2Contents(cleanSlug, cacheBust) {
+  const allBlocks = [];
+  const perPage = 100;
+
+  for (let page = 1; page <= 10; page += 1) {
+    const url = `https://api.are.na/v2/channels/${encodeURIComponent(cleanSlug)}/contents?per=${perPage}&page=${page}&sort=position&direction=desc&_t=${cacheBust}`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Are.na v2 HTTP ${res.status}`);
+    const data = await res.json();
+    const pageContents = Array.isArray(data?.contents) ? data.contents : [];
+    allBlocks.push(...pageContents);
+    if (pageContents.length < perPage) break;
+  }
+
+  return allBlocks;
+}
+
+async function fetchStandaloneV3Contents(cleanSlug, cacheBust) {
+  const allBlocks = [];
+  const perPage = 100;
+
+  for (let page = 1; page <= 10; page += 1) {
+    const url = `https://api.are.na/v3/channels/${encodeURIComponent(cleanSlug)}/contents?per=${perPage}&page=${page}&_t=${cacheBust}`;
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`Are.na v3 HTTP ${res.status}`);
+    const data = await res.json();
+    const rawItems = Array.isArray(data?.data) ? data.data : [];
+    allBlocks.push(...rawItems.map(normalizeStandaloneV3Block));
+    if (!data?.meta?.has_more_pages || rawItems.length === 0) break;
+  }
+
+  return allBlocks;
+}
+
+async function fetchArenaChannel(slug, options = {}) {
   if (!moodboardGrid) return;
+  const { background = false } = options;
 
-  const cleanSlug = slug.trim().replace(/^https?:\/\/www\.are\.na\//, '').replace(/^channels\//, '').split('/')[0];
+  const cleanSlug = slug
+    .trim()
+    .replace(/^https?:\/\/(?:www\.)?are\.na\/(?:[^/]+\/)?/, '')
+    .replace(/^channels?\//, '')
+    .split(/[?#]/)[0]
+    .replace(/\/+$/, '');
+
+  activeChannelSlug = cleanSlug;
+  const cacheBust = Date.now();
+  lastArenaFetchAt = cacheBust;
+
   if (arenaExternalLink) {
     arenaExternalLink.href = `https://www.are.na/channel/${cleanSlug}`;
   }
 
-  moodboardGrid.innerHTML = `
-    <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: #7A7270; font-size: 13px;">
-      Sincronizando bloques de Are.na...
-    </div>
-  `;
-  if (moodboardFeedback) moodboardFeedback.style.display = 'none';
-
-  const targetApi = `https://api.are.na/v2/channels/${encodeURIComponent(cleanSlug)}?per=12`;
-  const proxies = [
-    `https://corsproxy.io/?${encodeURIComponent(targetApi)}`,
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetApi)}`
-  ];
-
-  let channelData = null;
-
-  for (const proxyUrl of proxies) {
-    try {
-      const response = await fetch(proxyUrl);
-      if (response.ok) {
-        channelData = await response.json();
-        break;
-      }
-    } catch (err) {
-      // try next proxy
-    }
+  if (!background && !hasRenderedArenaBlocks) {
+    moodboardGrid.innerHTML = `
+      <div style="column-span: all; padding: 40px; text-align: center; color: #7A7270; font-size: 13px;">
+        Loading moodboard from Are.na...
+      </div>
+    `;
   }
+  if (arenaRefreshBtn) arenaRefreshBtn.classList.add('is-syncing');
 
-  if (channelData && channelData.contents) {
-    renderArenaBlocks(channelData.contents.slice(0, 8), cleanSlug);
-  } else {
-    // Error handling & fallback visual
+  try {
+    let contents = null;
+    try {
+      contents = await fetchStandaloneV2Contents(cleanSlug, cacheBust);
+    } catch {
+      contents = await fetchStandaloneV3Contents(cleanSlug, cacheBust);
+    }
+
+    if (moodboardFeedback) moodboardFeedback.style.display = 'none';
+    renderArenaBlocks(contents);
+    hasRenderedArenaBlocks = true;
+  } catch (err) {
+    console.warn('Are.na live sync warning:', err);
+    if (!hasRenderedArenaBlocks) {
+      try {
+        const backupRes = await fetch(`../public/assets/inspo_channel_backup.json?_t=${cacheBust}`, {
+          cache: 'no-store',
+        });
+        if (backupRes.ok) {
+          const backupData = await backupRes.json();
+          renderArenaBlocks(backupData?.contents || []);
+          hasRenderedArenaBlocks = true;
+        }
+      } catch {
+        // ignore backup error
+      }
+    }
     if (moodboardFeedback) {
       moodboardFeedback.style.display = 'block';
-      moodboardFeedback.textContent = 'Aviso: No se pudo conectar directamente con el canal de Are.na (posible restricción CORS o canal no público). Mostrando bloques de muestra.';
+      moodboardFeedback.textContent =
+        'Unable to sync live with Are.na right now. Showing last saved blocks.';
     }
-    renderArenaBlocks([
-      {
-        id: 'fallback-1',
-        title: 'Editorial Photography Styling',
-        class: 'Image',
-        image: { display: { url: '../public/assets/projects/mirenlas.png' } },
-        source: { url: `https://www.are.na/channel/${cleanSlug}` }
-      },
-      {
-        id: 'fallback-2',
-        title: 'Minimalist Monogram & Soft Palettes',
-        class: 'Image',
-        image: { display: { url: '../public/assets/projects/mila_mia.png' } },
-        source: { url: `https://www.are.na/channel/${cleanSlug}` }
-      },
-      {
-        id: 'fallback-3',
-        title: 'Spatial Rhythm & Movement',
-        class: 'Media',
-        image: { display: { url: '../public/assets/projects/experimental_video.png' } },
-        source: { url: `https://www.are.na/channel/${cleanSlug}` }
-      },
-      {
-        id: 'fallback-4',
-        title: 'Packaging & Stop Motion Narratives',
-        class: 'Image',
-        image: { display: { url: '../public/assets/projects/social_media.png' } },
-        source: { url: `https://www.are.na/channel/${cleanSlug}` }
-      }
-    ], cleanSlug);
+  } finally {
+    if (arenaRefreshBtn) arenaRefreshBtn.classList.remove('is-syncing');
   }
 }
 
@@ -223,27 +273,26 @@ function renderArenaBlocks(contents) {
   if (!contents || contents.length === 0) {
     moodboardGrid.innerHTML = `
       <div style="column-span: all; padding: 40px; text-align: center; color: #7A7270; font-size: 13px;">
-        Este canal no contiene bloques.
+        This channel is currently empty.
       </div>
     `;
     return;
   }
 
-  contents.forEach(block => {
+  contents.forEach((block) => {
     const imgUrl = block.image
       ? (block.image.display?.url || block.image.large?.url || block.image.original?.url || block.image.thumb?.url)
       : null;
-    
-    // Redirige al origen real del recurso (ej. Instagram o web de procedencia), o al bloque en Are.na
+
     const targetUrl = block.source?.url || `https://www.are.na/block/${block.id}`;
-    const altText = block.title || block.generated_title || 'Inspiración visual';
+    const altText = block.title || block.generated_title || 'Visual inspiration';
 
     const card = document.createElement('a');
     card.className = 'moodboard-card';
     card.href = targetUrl;
     card.target = '_blank';
     card.rel = 'noopener noreferrer';
-    card.title = 'Abrir origen de la imagen';
+    card.title = 'Open original source';
 
     if (imgUrl) {
       card.innerHTML = `
@@ -266,18 +315,43 @@ function renderArenaBlocks(contents) {
   });
 }
 
+if (arenaRefreshBtn) {
+  arenaRefreshBtn.addEventListener('click', () => {
+    fetchArenaChannel(activeChannelSlug, { background: true });
+  });
+}
+
 if (channelForm) {
   channelForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const slug = channelInput.value.trim();
     if (slug) {
+      hasRenderedArenaBlocks = false;
       fetchArenaChannel(slug);
     }
   });
 }
 
-// Iniciar carga del canal de Are.na propio de Lola
-fetchArenaChannel('inspo-z5eag9wxqag');
+// Iniciar carga continua del canal de Are.na propio de Lola
+fetchArenaChannel(activeChannelSlug);
+
+window.setInterval(() => {
+  if (document.visibilityState === 'visible') {
+    fetchArenaChannel(activeChannelSlug, { background: true });
+  }
+}, ARENA_POLL_MS);
+
+const handleStandaloneTabSync = () => {
+  if (document.visibilityState === 'visible') {
+    const now = Date.now();
+    if (now - lastArenaFetchAt >= ARENA_FOCUS_THROTTLE_MS) {
+      fetchArenaChannel(activeChannelSlug, { background: true });
+    }
+  }
+};
+
+document.addEventListener('visibilitychange', handleStandaloneTabSync);
+window.addEventListener('focus', handleStandaloneTabSync);
 
 // ==========================================================================
 // 4. ABOUT DISCIPLINE GALLERY (DOODLE FRAMES COLLAGE)
@@ -408,3 +482,14 @@ discBtns.forEach(btn => {
     }
   });
 });
+
+// Inicializar con la categoría 'art' abierta por defecto
+const defaultArtBtn = document.querySelector('.disc-btn[data-category="art"]');
+if (defaultArtBtn && galleryContainer) {
+  currentAboutCategory = 'art';
+  defaultArtBtn.classList.add('active');
+  const arrow = defaultArtBtn.querySelector('.disc-arrow');
+  if (arrow) arrow.textContent = '✕';
+  renderAboutGallery('art');
+  galleryContainer.style.display = 'block';
+}
