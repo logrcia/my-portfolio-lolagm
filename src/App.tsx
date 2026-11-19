@@ -7,8 +7,8 @@ import React, { useState } from 'react';
 import { Header } from './components/Header.tsx';
 import { Hero } from './components/Hero.tsx';
 import { ProjectGrid } from './components/ProjectGrid.tsx';
+import { ToolsStrip } from './components/ToolsSection.tsx';
 import { Moodboard } from './components/Moodboard.tsx';
-import { ToolsSection } from './components/ToolsSection.tsx';
 import { AboutSection } from './components/AboutSection.tsx';
 import { ContactFooter } from './components/ContactFooter.tsx';
 import { FlowerDecorations } from './components/FlowerDecorations.tsx';
@@ -49,13 +49,13 @@ export default function App() {
           onSelectProject={(project) => setSelectedProject(project)}
         />
 
+        {/* Franja horizontal completa de softwares debajo de Work */}
+        <ToolsStrip />
+
         {/* 4. Live Moodboard: Conectado a canal propio de Lola: inspo-z5eag9wxqag */}
         <Moodboard channelSlug="inspo-z5eag9wxqag" />
 
-        {/* 5. Tools: 8 herramientas con iconos y badges */}
-        <ToolsSection />
-
-        {/* 6. About & Background detallado */}
+        {/* 5. About & Background detallado */}
         <AboutSection />
       </main>
 

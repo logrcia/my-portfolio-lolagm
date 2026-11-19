@@ -8,7 +8,6 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const navItems = [
     { label: 'Work', href: '#work', id: 'work' },
     { label: 'Moodboard', href: '#moodboard', id: 'moodboard' },
-    { label: 'Tools', href: '#tools', id: 'tools' },
     { label: 'About', href: '#about', id: 'about' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];
@@ -37,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         Lola García Marelli
       </a>
 
-      {/* Navigation Links: Work · Moodboard · Tools · About · Contact */}
+      {/* Navigation Links: Work · Moodboard · About · Contact */}
       <nav className="flex items-center flex-wrap justify-center gap-x-5 sm:gap-x-7 gap-y-1 text-xs sm:text-[13px] font-medium tracking-[0.04em]">
         {navItems.map((item, index) => (
           <React.Fragment key={item.id}>
